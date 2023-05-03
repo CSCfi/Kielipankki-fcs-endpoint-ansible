@@ -1,0 +1,37 @@
+- name: Enable UFW firewall
+  community.general.ufw:
+    state: enabled
+    policy: allow
+  become: true
+
+- name: Allow SSH only from CSC IP addresses
+  become: true
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+    src: "{{ item }}"
+  loop:
+    - 193.166.1.0/24 #CSC Office
+    - 193.166.2.0/24 #CSC Office
+    - 193.166.84.0/24 #CSC VPN
+    - 193.166.85.0/24 #CSC VPN
+
+
+- name: Allow port 8080 only for kielipankki-proxy addresses
+  become: true
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    port: 8080
+    src: "{{ item }}"
+  loop:
+    - 128.214.255.214/32 #Kielipankki-proxy-pre-prod
+    - 195.148.30.210/32 #Kielipankki-proxy-prod
+
+- name: Allow Opsview port only for Opsview server
+  become: true
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    port: 5666
+    src: 193.167.254.68

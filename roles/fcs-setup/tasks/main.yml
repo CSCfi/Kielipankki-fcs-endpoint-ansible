@@ -1,0 +1,35 @@
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - tomcat9
+      - maven
+      - openjdk-8-jdk
+    update_cache: yes
+  become: yes
+
+- name: Clone Kielipankki-fcs-korp-endpoint
+  ansible.builtin.git:
+    repo: "https://github.com/CSCfi/Kielipankki-fcs-korp-endpoint.git"
+    dest: "{{ fcs_directory }}"
+    clone: yes
+
+- name: Build package
+  ansible.builtin.shell: "mvn -D maven.test.skip=true package"
+  environment:
+    JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64/
+  args:
+    chdir: "{{ fcs_directory }}"
+
+- name: Build war file
+  ansible.builtin.shell: "mvn -D maven.test.skip=true war:war"
+  environment:
+    JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64/
+  args:
+    chdir: "{{ fcs_directory }}"
+
+- name: Copy war file to destination
+  ansible.builtin.copy:
+    src: "{{ fcs_directory }}/target/fcs-korp-endpoint-0.1-SNAPSHOT.war"
+    dest: "/var/lib/tomcat9/webapps/fcs-korp.war"
+    remote_src: yes
+  become: yes

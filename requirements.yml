@@ -1,0 +1,8 @@
+---
+
+collections:
+  - name: community.general
+
+  - name: git@github.com:CSCfi/Kielipankki-ansible-common.git
+    type: git
+    version: main

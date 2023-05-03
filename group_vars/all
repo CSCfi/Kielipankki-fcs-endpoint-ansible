@@ -1,0 +1,23 @@
+pouta_instance_name: "fcs-korp-endpoint"
+
+std_image: "Ubuntu-22.04"
+project_key: "kielipouta"
+project_sg: "fcs-korp-sg"
+project_security_groups: "default,{{ project_sg }}" # don't add spaces here!
+
+authorized_users:
+  - ktegel
+  - ajarven
+  - kaisakui
+  - matthies
+  - helhotti
+  - shardwic
+
+servers:
+  - name: "{{ pouta_instance_name }}"
+    image: "{{ std_image }}"
+    flavor: standard.tiny
+    key_name: "{{ project_key }}"
+    security_groups: "{{ project_security_groups }}"
+    meta:
+      group: default
