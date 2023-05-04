@@ -10,10 +10,6 @@
 
 Clone this repository and navigate to the correct directory.
 
-```
-$ git clone https://github.com/CSCfi/Kielipankki.git
-$ cd Kielipankki
-```
 
 ## Install requirements
 For Python requirements, it is recommended to use a virtual environment:
@@ -30,6 +26,11 @@ The activation step must be done separately for each new session.
 ```
 $ source project_2000680-openrc.sh
 ```
+
+## Install Ansible requirements
+
+$ ansible-galaxy collection install -r requirements.yml
+
 
 ## Run ansible playbook
 
