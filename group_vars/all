@@ -1,17 +1,13 @@
-pouta_instance_name: "fcs-korp-endpoint"
+instance_name: "fcs-korp-endpoint"
+pouta_instance_name: "{{ instance_name }}-{{ vm_name_postfix }}"
+
 
 std_image: "Ubuntu-22.04"
 project_key: "kielipouta"
 project_sg: "fcs-korp-sg"
 project_security_groups: "default,{{ project_sg }}" # don't add spaces here!
+network: "project_2000680"
 
-authorized_users:
-  - ktegel
-  - ajarven
-  - kaisakui
-  - matthies
-  - helhotti
-  - shardwic
 
 servers:
   - name: "{{ pouta_instance_name }}"
@@ -19,5 +15,7 @@ servers:
     flavor: standard.tiny
     key_name: "{{ project_key }}"
     security_groups: "{{ project_security_groups }}"
+    network: "{{ network }}"
     meta:
-      group: default
+      hostname: "{{ pouta_instance_name }}"
+      group: "{{ instance_name }}"

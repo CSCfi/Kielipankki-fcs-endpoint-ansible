@@ -1,5 +1,5 @@
 - name: Create virtual machine on cPouta
-  hosts: localhost # The OpenStack Shade modules run by Shade on your local machine.
+  hosts: localhost
 
   roles:
     - role: kielipankki.common.create_instances
@@ -7,29 +7,12 @@
 
   vars:
     security_group_rules:
-      - name: ssh
-        protocol: tcp
-        port: 22
-        allowed_ips:
-          - "193.166.1.0/24" #CSC Office
-          - "193.166.2.0/24" #CSC Office
-          - "193.166.84.0/24" #CSC VPN
-          - "193.166.85.0/24" #CSC VPN
-
       - name: http 8080
         protocol: tcp
         port: 8080
         allowed_ips:
           - "128.214.255.214/32" #Kielipankki-proxy-pre-prod
           - "195.148.30.210/32" #Kielipankki-proxy-prod
-
-      - name: nagios
-        protocol: tcp
-        port: 5666
-        allowed_ips:
-          - "193.167.254.68/32" #opsview
-
-
 
 - name: Setup FCS Korp endpoint
   hosts: fcs-korp-vm

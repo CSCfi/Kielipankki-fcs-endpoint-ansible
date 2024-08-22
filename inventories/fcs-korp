@@ -1,4 +1,10 @@
-localhost ansible_connection=local ansible_python_interpreter="{{ansible_playbook_python}}"
-
-[fcs-korp-vm]
-fcs-korp-endpoint ansible_user=ubuntu
+ll:
+  hosts:
+    localhost:
+      ansible_connection: local
+      floating_ip: 86.50.253.167
+      vm_name_postfix: pre-prod
+      ansible_python_interpreter: python
+    fcs-korp-vm:
+      ansible_host: 86.50.253.167
+      ansible_user: ubuntu
