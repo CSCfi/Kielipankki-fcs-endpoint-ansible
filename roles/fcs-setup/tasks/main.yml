@@ -64,6 +64,7 @@
     target/fcs-korp-endpoint-0.1-kp-SNAPSHOT-MIGRATED.war
   args:
     chdir: "{{ fcs_directory }}"
+  become: yes
 
 - name: Copy WAR to Tomcat webapps
   ansible.builtin.copy:
