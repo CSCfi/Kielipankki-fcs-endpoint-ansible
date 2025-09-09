@@ -2,9 +2,9 @@ all:
   hosts:
     localhost:
       ansible_connection: local
-      floating_ip: 86.50.253.167
+      floating_ip: 86.50.169.164 
       vm_name_postfix: pre-prod
       ansible_python_interpreter: python
     fcs-korp-vm:
-      ansible_host: 86.50.253.167
+      ansible_host: 86.50.169.164 
       ansible_user: ubuntu
