@@ -1,6 +1,12 @@
 instance_name: "fcs-korp-endpoint"
 pouta_instance_name: "{{ instance_name }}-{{ vm_name_postfix }}"
 
+authorized_users:
+  - ktegel
+  - ajarven
+  - matthies
+  - shardwic
+  - voitanta
 
 std_image: "Ubuntu-22.04"
 project_key: "kielipouta"
