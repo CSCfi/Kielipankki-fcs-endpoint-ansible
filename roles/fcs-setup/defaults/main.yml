@@ -1,4 +1,2 @@
 home_directory: /home/ubuntu
 fcs_directory: "{{ home_directory }}/Kielipankki-fcs-korp-endpoint"
-tomcat_version: "11.0.9"
-migration_version: "1.0.9"
