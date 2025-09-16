@@ -8,7 +8,7 @@ authorized_users:
   - shardwic
   - voitanta
 
-std_image: "Ubuntu-22.04"
+std_image: "Ubuntu-24.04"
 project_key: "kielipouta"
 project_sg: "fcs-korp-sg"
 project_security_groups: "default,{{ project_sg }}" # don't add spaces here!

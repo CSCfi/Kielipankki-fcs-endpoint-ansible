@@ -1,50 +1,12 @@
 - name: Install dependencies
   ansible.builtin.apt:
     name:
-      #- tomcat9
-      - maven
       - openjdk-21-jdk
+      - maven
+      - tomcat10
+      - tomcat-jakartaee-migration
     update_cache: yes
   become: yes
-
-
-
-# Tomcat and the migration tool are downloaded from Tomcat's archive, and the latest version may not be available there.
-# Alternatively, for the latest versions you can change the download url's to the ones found here:
-# https://tomcat.apache.org/download-11.cgi   and   https://tomcat.apache.org/download-migration.cgi
-- name: Download Tomcat 11
-  get_url:
-    url: "https://archive.apache.org/dist/tomcat/tomcat-11/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
-    dest: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
-- name: Extract Tomcat
-  unarchive:
-    src: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
-    dest: "."
-    remote_src: yes
-- name: Remove Tomcat tar.gz
-  file:
-    path: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
-    state: absent
-
-
-
-- name: Download migration tool
-  get_url:
-    url: "https://archive.apache.org/dist/tomcat/jakartaee-migration/v{{ migration_version }}/binaries/jakartaee-migration-{{ migration_version }}-bin.tar.gz"
-    dest: "/tmp/jakartaee-migration-{{ migration_version }}-bin.tar.gz"
-
-- name: Extract migration tool
-  unarchive:
-    src: "/tmp/jakartaee-migration-{{ migration_version }}-bin.tar.gz"
-    dest: "."
-    remote_src: yes
-
-- name: Remove migration tool tar.gz
-  file:
-    path: "/tmp/jakartaee-migration-{{ migration_version }}-bin.tar.gz"
-    state: absent
-
-
 
 - name: Clone Kielipankki-fcs-korp-endpoint
   ansible.builtin.git:
@@ -59,22 +21,15 @@
 
 - name: Migrate WAR file
   ansible.builtin.shell: |
-    ../jakartaee-migration-{{ migration_version }}/bin/migrate.sh \
-    target/fcs-korp-endpoint-0.1-kp-SNAPSHOT.war \
-    target/fcs-korp-endpoint-0.1-kp-SNAPSHOT-MIGRATED.war
+    /usr/bin/javax2jakarta \
+      target/fcs-korp-endpoint-0.1-kp-SNAPSHOT.war \
+      target/fcs-korp-endpoint-0.1-kp-SNAPSHOT-MIGRATED.war
   args:
     chdir: "{{ fcs_directory }}"
-  become: yes
 
 - name: Copy WAR to Tomcat webapps
   ansible.builtin.copy:
     src: "{{ fcs_directory }}/target/fcs-korp-endpoint-0.1-kp-SNAPSHOT-MIGRATED.war"
-    dest: "apache-tomcat-{{ tomcat_version }}/webapps/fcs-korp.war" # not /var/lib ?
+    dest: "/var/lib/tomcat10/webapps/fcs-korp.war"
     remote_src: yes
   become: yes
-
-- name: Start Tomcat
-  ansible.builtin.shell: "/home/ubuntu/apache-tomcat-{{ tomcat_version }}/bin/startup.sh"
-  args:
-    chdir: "/home/ubuntu"
-  become: no
