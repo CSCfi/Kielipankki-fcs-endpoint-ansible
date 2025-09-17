@@ -33,3 +33,4 @@
     dest: "/var/lib/tomcat10/webapps/fcs-korp.war"
     remote_src: yes
   become: yes
+  
