@@ -12,7 +12,8 @@
   ansible.builtin.git:
     repo: "https://github.com/CSCfi/Kielipankki-fcs-korp-endpoint.git"
     dest: "{{ fcs_directory }}"
-    clone: yes
+    update: yes
+    force: yes           # reset even if the working tree is dirty
 
 - name: Build package
   ansible.builtin.shell: "mvn clean package -D maven.test.skip=true"
@@ -22,14 +23,14 @@
 - name: Migrate WAR file
   ansible.builtin.shell: |
     /usr/bin/javax2jakarta \
-      target/fcs-korp-endpoint-0.1-kp-SNAPSHOT.war \
-      target/fcs-korp-endpoint-0.1-kp-SNAPSHOT-MIGRATED.war
+      target/fcs-korp-endpoint-1.0-kp.war \
+      target/fcs-korp-endpoint-1.0-kp-MIGRATED.war
   args:
     chdir: "{{ fcs_directory }}"
 
 - name: Copy WAR to Tomcat webapps
   ansible.builtin.copy:
-    src: "{{ fcs_directory }}/target/fcs-korp-endpoint-0.1-kp-SNAPSHOT-MIGRATED.war"
+    src: "{{ fcs_directory }}/target/fcs-korp-endpoint-1.0-kp-MIGRATED.war"
     dest: "/var/lib/tomcat10/webapps/fcs-korp.war"
     remote_src: yes
   become: yes
