@@ -11,6 +11,7 @@
 - name: Clone Kielipankki-fcs-korp-endpoint
   ansible.builtin.git:
     repo: "https://github.com/CSCfi/Kielipankki-fcs-korp-endpoint.git"
+    version: master
     dest: "{{ fcs_directory }}"
     update: yes
     force: yes           # reset even if the working tree is dirty
