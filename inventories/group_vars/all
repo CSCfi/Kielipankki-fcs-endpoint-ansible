@@ -6,7 +6,6 @@ authorized_users:
   - ajarven
   - matthies
   - shardwic
-  - voitanta
 
 std_image: "Ubuntu-24.04"
 project_key: "kielipouta"
