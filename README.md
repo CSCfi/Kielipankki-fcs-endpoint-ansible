@@ -50,5 +50,5 @@ curl "localhost:8080/fcs-korp/sru?queryType=fcs&query=%5Bword+%3D+%27bastu%27%5D
 Or test it locally:
 
 ```
-ssh ubuntu@86.50.253.167 "curl 'localhost:8080/fcs-korp/sru?queryType=fcs&query=%5Bword+%3D+%27bastu%27%5D'"
+ssh ubuntu@86.50.169.164 "curl 'localhost:8080/fcs-korp/sru?queryType=fcs&query=%5Bword+%3D+%27bastu%27%5D'"
 ```
