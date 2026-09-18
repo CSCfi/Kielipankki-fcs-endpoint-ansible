@@ -1,4 +1,4 @@
 python-openstackclient
-ansible==11.9.0
+ansible>=14.3
 dnspython
 openstacksdk
